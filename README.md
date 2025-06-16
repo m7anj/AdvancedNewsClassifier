@@ -1,4 +1,4 @@
-# Advanced News Classifier
+# NLP News Classifier
 
 A machine learning project that automatically categorizes news articles using natural language processing.
 
