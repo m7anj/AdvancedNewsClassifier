@@ -3,6 +3,7 @@ package uob.oop;
 import javax.xml.crypto.Data;
 
 public class HtmlParser {
+
     /***
      * Extract the title of the news from the _htmlCode.
      * @param _htmlCode Contains the full HTML string from a specific news. E.g. 01.htm.
@@ -12,7 +13,8 @@ public class HtmlParser {
         String titleTagOpen = "<title>";
         String titleTagClose = "</title>";
 
-        int titleStart = _htmlCode.indexOf(titleTagOpen) + titleTagOpen.length();
+        int titleStart =
+            _htmlCode.indexOf(titleTagOpen) + titleTagOpen.length();
         int titleEnd = _htmlCode.indexOf(titleTagClose);
 
         if (titleStart != -1 && titleEnd != -1 && titleEnd > titleStart) {
@@ -32,10 +34,13 @@ public class HtmlParser {
         String contentTagOpen = "\"articleBody\": \"";
         String contentTagClose = " \",\"mainEntityOfPage\":";
 
-        int contentStart = _htmlCode.indexOf(contentTagOpen) + contentTagOpen.length();
+        int contentStart =
+            _htmlCode.indexOf(contentTagOpen) + contentTagOpen.length();
         int contentEnd = _htmlCode.indexOf(contentTagClose);
 
-        if (contentStart != -1 && contentEnd != -1 && contentEnd > contentStart) {
+        if (
+            contentStart != -1 && contentEnd != -1 && contentEnd > contentStart
+        ) {
             return _htmlCode.substring(contentStart, contentEnd).toLowerCase();
         }
 
@@ -43,8 +48,6 @@ public class HtmlParser {
     }
 
     public static NewsArticles.DataType getDataType(String _htmlCode) {
-        //TODO Task 3.1 - 1.5 Marks
-
         int lower = _htmlCode.indexOf("<datatype>") + 10;
         int upper = _htmlCode.indexOf("</datatype>");
 
@@ -59,33 +62,25 @@ public class HtmlParser {
 
         if (a.length() == 7) {
             return testing;
-
         } else if (a.length() == 8) {
             return training;
-
         } else {
             return testing;
         }
     }
 
-    public static String getLabel (String _htmlCode) {
-        //TODO Task 3.2 - 1.5 Marks
-
+    public static String getLabel(String _htmlCode) {
         String label;
 
         int lower = _htmlCode.indexOf("<label>") + 7;
         int upper = _htmlCode.indexOf("</label>");
 
         if (upper != -1 && lower != -1) {
-
             label = _htmlCode.substring(lower, upper);
 
             return label;
-
         } else {
             return "-1";
         }
     }
-
-
 }

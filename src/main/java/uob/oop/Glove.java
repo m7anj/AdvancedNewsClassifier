@@ -1,7 +1,8 @@
 package uob.oop;
 
 public class Glove {
-     private String strVocabulary;
+
+    private String strVocabulary;
     private Vector vecVector;
 
     public Glove(String _vocabulary, Vector _vector) {
@@ -10,7 +11,7 @@ public class Glove {
     }
 
     public String getVocabulary() {
-        return strVocabulary; //Please modify the return value.
+        return strVocabulary;
     }
 
     public Vector getVector() {
@@ -24,5 +25,4 @@ public class Glove {
     public void setVector(Vector _vector) {
         vecVector = _vector;
     }
-
 }

@@ -2,20 +2,26 @@ package uob.oop;
 
 import edu.stanford.nlp.ling.*;
 import edu.stanford.nlp.pipeline.*;
+import java.util.Properties;
 import org.bytedeco.libfreenect._freenect_context;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
-import java.util.Properties;
 
 public class ArticlesEmbedding extends NewsArticles {
+
     private int intSize = -1;
     private String processedText = "";
 
     private INDArray newsEmbedding = Nd4j.create(0);
 
-    public ArticlesEmbedding(String _title, String _content, NewsArticles.DataType _type, String _label) {
+    public ArticlesEmbedding(
+        String _title,
+        String _content,
+        NewsArticles.DataType _type,
+        String _label
+    ) {
         //TODO Task 5.1 - 1 Mark
-        super(_title,_content,_type,_label);
+        super(_title, _content, _type, _label);
     }
 
     public void setEmbeddingSize(int _size) {
@@ -23,22 +29,14 @@ public class ArticlesEmbedding extends NewsArticles {
         intSize = _size;
     }
 
-    public int getEmbeddingSize(){
+    public int getEmbeddingSize() {
         return intSize;
     }
 
     private String space = ("\\s+");
 
-
-
-
-
-
-
     @Override
     public String getNewsContent() {
-        //TODO Task 5.3 - 10 Marks
-
         String content = super.getNewsContent();
 
         String cleanedContent = textCleaning(content);
@@ -76,12 +74,6 @@ public class ArticlesEmbedding extends NewsArticles {
         return processedText.trim();
     }
 
-
-
-
-
-
-
     public INDArray getEmbedding() throws Exception {
         //TODO Task 5.4 - 20 Marks
 
@@ -95,7 +87,7 @@ public class ArticlesEmbedding extends NewsArticles {
             throw new InvalidTextException("Invalid text");
         }
 
-        if ((newsEmbedding.isEmpty() == false)){
+        if ((newsEmbedding.isEmpty() == false)) {
             return Nd4j.vstack(newsEmbedding.mean(1));
         }
 
@@ -104,8 +96,14 @@ public class ArticlesEmbedding extends NewsArticles {
 
         for (String word : words) {
             for (Glove glove : AdvancedNewsClassifier.listGlove) {
-                if ((glove.getVocabulary().equalsIgnoreCase(word)) && (count < intSize)){
-                    newsEmbedding.putRow(count,Nd4j.create(glove.getVector().getAllElements()));
+                if (
+                    (glove.getVocabulary().equalsIgnoreCase(word)) &&
+                    (count < intSize)
+                ) {
+                    newsEmbedding.putRow(
+                        count,
+                        Nd4j.create(glove.getVector().getAllElements())
+                    );
                     count++;
                 }
             }
@@ -113,12 +111,6 @@ public class ArticlesEmbedding extends NewsArticles {
 
         return Nd4j.vstack(newsEmbedding.mean(1));
     }
-
-
-
-
-
-
 
     /***
      * Clean the given (_content) text by removing all the characters that are not 'a'-'z', '0'-'9' and white space.
@@ -129,7 +121,11 @@ public class ArticlesEmbedding extends NewsArticles {
         StringBuilder sbContent = new StringBuilder();
 
         for (char c : _content.toLowerCase().toCharArray()) {
-            if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || Character.isWhitespace(c)) {
+            if (
+                (c >= 'a' && c <= 'z') ||
+                (c >= '0' && c <= '9') ||
+                Character.isWhitespace(c)
+            ) {
                 sbContent.append(c);
             }
         }
